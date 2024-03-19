@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BiggController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,7 +38,6 @@ Route::post('api/checkout', [\App\Http\Controllers\OrderController::class, 'chec
 Route::get('api/users', [\App\Http\Controllers\UserController::class, 'index']);
 // ==========
 
-
 Route::group(['middleware' => 'auth'], function() {
     
     Route::get('/order/checkout', [\App\Http\Controllers\OrderController::class, 'process'])->name('checkout.process');
@@ -60,6 +60,42 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::prefix('s-sport')->group(function () {
+    Route::get('/about', [BiggController::class, 'about'])->name('about');
+    Route::get('/blog-details', [BiggController::class, 'blog_details'])->name('blog-details');
+    Route::get('/blog', [BiggController::class, 'blog'])->name('blog');
+    Route::get('/cart', [BiggController::class, 'cart'])->name('cart');
+    Route::get('/checkout', [BiggController::class, 'checkout'])->name('checkout');
+    Route::get('/contact', [BiggController::class, 'contact'])->name('contact');
+    Route::get('/', [BiggController::class, 'index'])->name('index');
+
+    Route::get('/login', [BiggController::class, 'login'])->name('login');
+    Route::post('/login_store', [BiggController::class, 'login_store'])->name('login_store');
+
+    Route::get('/my-account', [BiggController::class, 'my_account'])->name('my-account');
+    Route::get('/privacy-policy', [BiggController::class, 'privacy'])->name('privacy-policy');
+    Route::get('/product-details/{id}', [BiggController::class, 'product_details'])->name('product-details');
+    Route::get('/register', [BiggController::class, 'register'])->name('register');
+    Route::get('/shop', [BiggController::class, 'shop'])->name('shop');
+    Route::get('/terms-conditions', [BiggController::class, 'terms_conditions'])->name('terms-conditions');
+    Route::get('/search', [BiggController::class, 'search'])->name('search');
+    Route::get('/filter', [BiggController::class, 'filter'])->name('filter');
+    Route::get('/Dashboard', [BiggController::class, 'Dashboard'])->name('Dashboard');
+    Route::get('/panier', [BiggController::class, 'panier'])->name('panier');
+    Route::get('/likes', [BiggController::class, 'likes'])->name('likes');
+    Route::get('/Logout', [BiggController::class, 'Logout'])->name('Logout');
+    Route::get('/signup', [BiggController::class, 'signup'])->name('signup');
+    Route::post('/signup_store', [BiggController::class, 'signup_store'])->name('signup_store');
+
+    Route::post('/add_product/id', [BiggController::class, 'add_product'])->name('add_product');
+    //
+    Route::get('/autocomplete', [BiggController::class, 'autocomplete'])->name('autocomplete');
+    Route::get('/app', [BiggController::class, 'app'])->name('app');
+
+    Route::get('/logout', [BiggController::class, 'logout'])->name('logout');
+
+});

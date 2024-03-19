@@ -43,4 +43,16 @@ class Product extends Model implements HasMedia
     public function tags(){
         return $this->belongsToMany(Tag::class);
     }
+    public function getPictureAttribute($value)
+    {
+        if ($value) {
+            return asset('storage/' . $value);
+        } else {
+            return asset('default_product_img.jpg');
+        }
+    }
+    public function cmds()
+    {
+        return $this->belongsToMany(cmds::class);
+    }
 }
