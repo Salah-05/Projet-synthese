@@ -105,32 +105,24 @@
                                         <img alt="Surfside Media" src="assets/imgs/theme/icons/icon-cart.svg">
                                         <span class="pro-count blue">2</span>
                                     </a>
+                                    @auth('user')
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                         <ul>
+                                            @foreach ($commands as $command )
                                             <li>
                                                 <div class="shopping-cart-img">
                                                     <a href="product-details.html"><img alt="Surfside Media" src="assets/imgs/shop/thumbnail-3.jpg"></a>
                                                 </div>
                                                 <div class="shopping-cart-title">
-                                                    <h4><a href="product-details.html">Daisy Casual Bag</a></h4>
-                                                    <h4><span>1 × </span>$800.00</h4>
+                                                    <h4><a href="product-details.html">{{$command->name}}</a></h4>
+                                                    <h4><span>1 × </span>${{$command->prix}}</h4>
                                                 </div>
                                                 <div class="shopping-cart-delete">
                                                     <a href="#"><i class="fi-rs-cross-small"></i></a>
                                                 </div>
                                             </li>
-                                            <li>
-                                                <div class="shopping-cart-img">
-                                                    <a href="product-details.html"><img alt="Surfside Media" src="assets/imgs/shop/thumbnail-2.jpg"></a>
-                                                </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4><a href="product-details.html">Corduroy Shirts</a></h4>
-                                                    <h4><span>1 × </span>$3200.00</h4>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                                </div>
-                                            </li>
+                                            @endforeach
+                                            
                                         </ul>
                                         <div class="shopping-cart-footer">
                                             <div class="shopping-cart-total">
@@ -142,6 +134,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endauth
                                 </div>
                             </div>
                         </div>
@@ -555,7 +548,7 @@
                                             <span class="old-price">$245.8</span>
                                         </div>
                                         <div class="product-action-1 show">
-                                            <a aria-label="Add To Cart" class="action-btn hover-up" href="cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
+                                            <a aria-label="Add To Cart" class="action-btn hover-up" href="{{route('add_product')}}"><i class="fi-rs-shopping-bag-add"></i></a>
                                         </div>
                                     </div>
                                 </div>

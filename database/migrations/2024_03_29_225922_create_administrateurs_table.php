@@ -13,10 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('product_tag', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
+        Schema::create('administrateurs', function (Blueprint $table) {
+            $table->id('Id_Administrateur');
+            $table->string('nom', 50);
+            $table->string('prenom', 50);
+            $table->string('email', 50);
+            $table->string('numero_telephone', 50);
+            $table->string('mot_de_pass');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_tag');
+        Schema::dropIfExists('administrateurs');
     }
 };

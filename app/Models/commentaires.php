@@ -1,16 +1,17 @@
 <?php
 
 namespace App\Models;
-use App\Models\utilisateures;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\clients;
 
-class payments extends Model
+class commentaires extends Model
 {
     use HasFactory;
-    public function utilisateure()
+
+    public function client()
     {
-        return $this->belongsTo(utilisateures::class);
+        return $this->belongsTo(clients::class, 'id', 'id');
     }
 }

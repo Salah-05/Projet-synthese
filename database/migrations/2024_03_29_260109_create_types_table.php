@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('slug');
-            $table->text('cover')->nullable();
-            $table->foreignId('category_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->timestamps();
+        Schema::create('types', function (Blueprint $table) {
+            $table->id('Id_type');
+            $table->string('nom_type');
+            $table->string('model')->nullable();
+            $table->unsignedBigInteger('Id_marque');
+            $table->foreign('Id_marque')->references('Id_marque')->on('marques');
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('types');
     }
 };

@@ -14,18 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('addresses', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('utilisateure_id'); // Update the column name
-            $table->string('address');
-            $table->string('city');
-            $table->string('state')->nullable();
-            $table->string('postal_code')->nullable();
-            $table->string('country');
+            $table->id('id_address');
+            $table->string('adress', 50);
+            $table->string('ville', 50);
+            $table->string('code_postale', 50);
+            $table->unsignedBigInteger('id_client');
+            $table->foreign('id_client')->references('id')->on('clients');
+            $table->rememberToken();
             $table->timestamps();
-    
-            $table->foreign('utilisateure_id')->references('id')->on('utilisateures')->onDelete('cascade');
         });
-        
     }
 
     /**

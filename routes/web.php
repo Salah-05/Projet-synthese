@@ -83,7 +83,9 @@ Route::prefix('s-sport')->group(function () {
     Route::get('/shop', [BiggController::class, 'shop'])->name('shop');
     Route::get('/terms-conditions', [BiggController::class, 'terms_conditions'])->name('terms-conditions');
     Route::get('/search', [BiggController::class, 'search'])->name('search');
-    Route::get('/filter', [BiggController::class, 'filter'])->name('filter');
+    // Route::get('/filter/searchQuery', [BiggController::class, 'filter'])->name('filter');
+    Route::get('/filter/{searchQuery?}', [BiggController::class, 'filter'])->name('filter');
+
     Route::get('/Dashboard', [BiggController::class, 'Dashboard'])->name('Dashboard');
     Route::get('/panier', [BiggController::class, 'panier'])->name('panier');
     Route::get('/likes', [BiggController::class, 'likes'])->name('likes');

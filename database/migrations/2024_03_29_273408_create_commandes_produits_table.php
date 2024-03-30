@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cmds_product', function (Blueprint $table) {
+        Schema::create('commandes_produits', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('cmds_id');
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('Id_produit');
+            $table->unsignedBigInteger('Id_commande');
+            $table->integer('qte')->default(1);
+            $table->foreign('Id_produit')->references('Id_produit')->on('produits');
+            $table->foreign('Id_commande')->references('Id_commande')->on('commandes');
             $table->timestamps();
-        
-            $table->foreign('cmds_id')->references('id')->on('cmds')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
-        
     }
 
     /**
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cmds_product');
+        Schema::dropIfExists('commandes_produits');
     }
 };

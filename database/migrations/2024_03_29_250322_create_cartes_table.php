@@ -13,8 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admins', function (Blueprint $table) {
-            $table->id();
+        Schema::create('cartes', function (Blueprint $table) {
+            $table->id('Id_carte');
+            $table->string('cvv');
+            $table->string('solde');
+            $table->string('date_expiration');
+            $table->string('numero_de_cart');
+            $table->unsignedBigInteger('id_client');
+            $table->foreign('id_client')->references('id')->on('clients');
             $table->timestamps();
         });
     }
@@ -26,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('cartes');
     }
 };

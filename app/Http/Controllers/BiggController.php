@@ -23,9 +23,11 @@ class BiggController extends Controller
         return view('blog');
     }
     public function cart(){
+       if(Auth::guard('user')->check()){
         $id = Auth::guard('user')->id();
         $commands = cmds::with('products')->where('id',$id)->get();
         return view('cart',compact('commands'));
+       }
     }
     public function checkout(){
         return view('checkout');
@@ -36,6 +38,13 @@ class BiggController extends Controller
     public function index(Request $request){
         $product = Product::with('category')->inRandomOrder()->take(8)->get();
         $Category = Category::all();
+        
+        if(Auth::guard('user')->check()){
+            $id = Auth::guard('user')->id();
+            $commands = cmds::with('products')->where('id',$id)->get();
+            return view('index',compact('product','Category','commands'));
+        }
+
         return view('index',compact('product','Category'));
     }
     public function login_store(Request $request)
@@ -108,18 +117,24 @@ class BiggController extends Controller
         return view('shop', compact('product','productCount','minimumprice', 'maximumprice','searchQuery','Category'));
     }
     
-    public function filter(Request $request){
-        $searchQuery = $request->input('searchQuery');
+    public function filter(Request $request , $searchQuery=null){
+        // $searchQuery = $request->input('searchQuery');
+        $searchQuery = $request->input('searchQuery', $searchQuery);
         $minPrice = $request->input('minPrice');
         $maxPrice = $request->input('maxPrice');
         $minimumprice = $minPrice;
         $maximumprice = $maxPrice;
-        // $product = Product::where('name', 'like', '%' . $searchQuery . '%')
-        //                     ->orWhereHas('category', function($categoryQuery) use ($searchQuery) {
-        //                         $categoryQuery->where('name', 'like', '%' . $searchQuery . '%');
-        //                     })->whereBetween('price', [$minPrice, $maxPrice])
-        //                     ->paginate(12);
-        $product = Product::where('name', 'like', '%' . $searchQuery . '%')->whereBetween('price', [$minPrice, $maxPrice])->paginate(12);
+        
+        $product = Product::where(function ($query) use ($searchQuery) {
+            $query->where('name', 'like', '%' . $searchQuery . '%')
+                  ->orWhereHas('category', function ($categoryQuery) use ($searchQuery) {
+                      $categoryQuery->where('name', 'like', '%' . $searchQuery . '%');
+                  });
+        })
+        ->whereBetween('price', [$minPrice, $maxPrice])
+        ->paginate(12);
+            
+        // $product = Product::where('name', 'like', '%' . $searchQuery . '%')->whereBetween('price', [$minPrice, $maxPrice])->paginate(12);
         $Category = Category::all();
        
         $productCount = $product->count();
